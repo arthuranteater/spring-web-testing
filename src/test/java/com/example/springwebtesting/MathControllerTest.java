@@ -105,12 +105,13 @@ public class MathControllerTest {
 //        Examples
 //                /math/sum?n=4&n=5&n=6 should render the string 4 + 5 + 6 = 15
 
-        MultiValueMap<String, String> mockQueryStr = new LinkedMultiValueMap<String, String>();
-        mockQueryStr.add("n", "4");
-        mockQueryStr.add("n", "5");
-        mockQueryStr.add("n", "5");
+        MultiValueMap<String, String> mockQueryMap = new LinkedMultiValueMap<String, String>();
+        mockQueryMap.add("n", "4");
+        mockQueryMap.add("n", "5");
+        mockQueryMap.add("n", "6");
+        System.out.println("mockmap =" + mockQueryMap);
         RequestBuilder request = MockMvcRequestBuilders.post("/math/sum?n=4&n=5&n=6");
-        when(service.sum(mockQueryStr)).thenReturn("4 + 5 + 6 = 15");
+        when(service.sum(mockQueryMap)).thenReturn("4 + 5 + 6 = 15");
         try {
             this.mockMvc.perform(request).andExpect(content().string("4 + 5 + 6 = 15"));
         } catch (Exception e) {
