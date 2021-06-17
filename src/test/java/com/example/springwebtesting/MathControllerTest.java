@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -36,6 +37,7 @@ public class MathControllerTest {
     @Test
     public void get_math_pi_returns_pi() {
         RequestBuilder request = MockMvcRequestBuilders.get("/math/pi");
+        when(service.getPi()).thenReturn(Double.valueOf("3.141592653589793"));
         try {
             this.mockMvc.perform(request).andExpect(content().string("3.141592653589793"));
         } catch (Exception e) {
@@ -118,5 +120,56 @@ public class MathControllerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void get_math_volume_returns_volume_string() {
+
+//        POST /math/volume/3/4/5 should render the result The volume of a 3x4x5 rectangle is 60x
+//        PATCH /math/volume/6/7/8 should render the result The volume of a 6x7x8 rectangle is 336
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/volume/3/4/5");
+        when(service.volume(3,4,5)).thenReturn("The volume of a 3x4x5 rectangle is 60");
+        try {
+            this.mockMvc.perform(request).andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void get_math_area_returns_area_string() {
+
+//        Recall that the calculation for a circle is PI * radius^2
+//
+//        Circles require a radius. Rectangles require a width and height. If anything is invalid, render Invalid
+//
+//                Examples
+//        POST /math/area
+//
+//        type=circle&radius=4
+//        Would render Area of a circle with a radius of 4 is 50.26548
+
+        //MockHttpServletRequestBuilder request = post("/comments")
+        //        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        //        .param("content", "Firsties!")
+        //        .param("author", "Dwayne");
+
+        //this.mvc.perform(request)
+        //        .andExpect(status().isOk())
+        //        .andExpect(content().string("Dwayne said Firsties!"));
+
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/area")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("type", "circle")
+                .param("radius", "4");
+
+        when(service.areaCir(4)).thenReturn("The volume of a 3x4x5 rectangle is 60");
+        try {
+            this.mockMvc.perform(request).andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

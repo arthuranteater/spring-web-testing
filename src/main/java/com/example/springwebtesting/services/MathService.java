@@ -8,6 +8,12 @@ import java.util.List;
 @Service
 public class MathService {
 
+    private double pi = 3.141592653589793;
+
+    public double getPi() {
+        return pi;
+    }
+
     public MathService() {
     }
 
@@ -37,5 +43,21 @@ public class MathService {
         }
         System.out.println(str.deleteCharAt(str.length() - 1).toString() + "=" + sum.toString());
         return str.deleteCharAt(str.length() - 1).toString() + "= " + sum.toString();
+    }
+
+    public String volume(Integer l, Integer w, Integer h) {
+        Integer product = l * w * h;
+        return String.format("The volume of a %dx%dx%d rectangle is %d", l, w, h, product);
+    }
+
+    public String areaCir(Integer radius) {
+        double area = radius * radius * getPi();
+        return String.format("Area of a circle with a radius of %d is %s", radius, String.valueOf(area));
+    }
+
+    public String areaRec(Integer width, Integer height) {
+        double area = width * height;
+        return String.format("Area of a %dx%d rectangle is %d", width, height, area);
+
     }
 }
