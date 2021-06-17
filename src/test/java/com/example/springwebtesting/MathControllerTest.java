@@ -12,6 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -89,6 +93,26 @@ public class MathControllerTest {
         when(service.add(30, 5)).thenReturn(35);
         try {
             this.mockMvc.perform(request).andExpect(content().string("35"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void get_math_sum_returns_sum_string() {
+        // #2 - /math/sum
+        //Create an endpoint that takes POST requests to /math/sum and passes multiple parameters n:
+//        Examples
+//                /math/sum?n=4&n=5&n=6 should render the string 4 + 5 + 6 = 15
+
+        MultiValueMap<String, String> mockQueryStr = new LinkedMultiValueMap<String, String>();
+        mockQueryStr.add("n", "4");
+        mockQueryStr.add("n", "5");
+        mockQueryStr.add("n", "5");
+        RequestBuilder request = MockMvcRequestBuilders.post("/math/sum?n=4&n=5&n=6");
+        when(service.sum(mockQueryStr)).thenReturn("4 + 5 + 6 = 15");
+        try {
+            this.mockMvc.perform(request).andExpect(content().string("4 + 5 + 6 = 15"));
         } catch (Exception e) {
             e.printStackTrace();
         }
