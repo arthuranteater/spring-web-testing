@@ -138,25 +138,6 @@ public class MathControllerTest {
     @Test
     public void get_math_area_returns_area_string() {
 
-//        Recall that the calculation for a circle is PI * radius^2
-//
-//        Circles require a radius. Rectangles require a width and height. If anything is invalid, render Invalid
-//
-//                Examples
-//        POST /math/area
-//
-//        type=circle&radius=4
-//        Would render Area of a circle with a radius of 4 is 50.26548
-
-        //MockHttpServletRequestBuilder request = post("/comments")
-        //        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        //        .param("content", "Firsties!")
-        //        .param("author", "Dwayne");
-
-        //this.mvc.perform(request)
-        //        .andExpect(status().isOk())
-        //        .andExpect(content().string("Dwayne said Firsties!"));
-
         RequestBuilder request = MockMvcRequestBuilders.post("/math/area")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("type", "circle")
