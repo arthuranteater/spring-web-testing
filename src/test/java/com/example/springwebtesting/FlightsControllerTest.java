@@ -8,6 +8,7 @@ import com.example.springwebtesting.services.MathService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,6 +37,9 @@ public class FlightsControllerTest {
     @MockBean
     private FlightsService mockedFlightsService;
 
+    @MockBean
+    private MathService mockedMathService;
+
     //helper, not working google it
     private String getJSON(String path) throws Exception {
         URL url = this.getClass().getResource(path);
@@ -45,7 +49,7 @@ public class FlightsControllerTest {
     @Test
     public void get_flight_returns_flight_json() throws Exception {
 
-//        ------ Manually create JSON string ------
+//        1) ------ Manually create JSON string ------
 
 //        HashMap<String, Object> data = new HashMap<String, Object>(){
 //            {
@@ -55,6 +59,8 @@ public class FlightsControllerTest {
 //        };
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        String json = objectMapper.writeValueAsString(data);
+
+//        2) ----- Importing the JSON from source ------
 
 //        String json = getJSON("/data/flight-data.json");
 
@@ -67,6 +73,7 @@ public class FlightsControllerTest {
         Flight.Ticket ticket = new Flight.Ticket(200, passenger);
         List<Flight.Ticket> ticketList = new ArrayList<Flight.Ticket>(List.of(ticket));
         Flight flight = new Flight("2017-04-21 14:34", ticketList);
+        //consider creating immutable classes here, deleting getters and setters and adding annotations for Jackson @JsonCreator and @JsonProperty
 
         when(mockedFlightsService.getFlight()).thenReturn(flight);
         this.mockMvc.perform(request).andExpect(status().isOk())

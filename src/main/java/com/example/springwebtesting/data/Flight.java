@@ -1,20 +1,12 @@
 package com.example.springwebtesting.data;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Flight {
-//    {
-//  "departs": "2017-04-21 14:34",
-//  "tickets": [
-//    {
-//      "passenger": {
-//        "firstName": "Some name",
-//        "lastName": "Some other name"
-//      },
-//      "price": 200
-//    }
-//  ]
-//}
+
     private String departs;
 
     public String getDeparts() {
@@ -35,10 +27,13 @@ public class Flight {
         this.tickets = tickets;
     }
 
+    public Flight(List<Ticket> tickets) {
+        this(null, tickets);
+    }
+
     public Flight(String departs, List<Ticket> tickets) {
         this.setDeparts(departs);
         this.setTicketList(tickets);
-
     }
 
     static public class Ticket {
